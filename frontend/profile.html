@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,27 +8,32 @@
   <link rel="stylesheet" href="css/style.css" />
   <style>
     .profile-avatar {
-      width: 80px; height: 80px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--green-400), var(--green-600));
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 2rem;
       color: white;
       font-weight: 700;
       margin-bottom: 1rem;
-      box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+      box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
     }
+
     .profile-header-card {
       display: flex;
       align-items: center;
       gap: 1.5rem;
       padding: 1.75rem;
-      background: white;
+      background: rgb(0, 0, 0);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
-      border: 1px solid rgba(34,197,94,0.08);
+      border: 1px solid rgba(34, 197, 94, 0.08);
       margin-bottom: 1.5rem;
     }
+
     .bmi-indicator {
       display: inline-flex;
       align-items: center;
@@ -40,9 +46,12 @@
     }
   </style>
 </head>
+
 <body>
   <nav class="navbar">
-    <div class="navbar-brand"><div class="logo-icon">💪</div>FitLife</div>
+    <div class="navbar-brand">
+      <div class="logo-icon">💪</div>FitLife
+    </div>
     <ul class="navbar-nav">
       <li><a href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a></li>
       <li><a href="profile.html" class="active"><span class="nav-icon">👤</span> Profile</a></li>
@@ -155,4 +164,5 @@
   <script src="js/main.js"></script>
   <script src="js/profile.js"></script>
 </body>
+
 </html>

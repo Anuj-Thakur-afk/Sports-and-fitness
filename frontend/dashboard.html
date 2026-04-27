@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar">
@@ -124,11 +126,14 @@
               <span style="font-weight: 600; color: var(--neon-green);" id="waterCount">0 / 8</span>
             </div>
             <div class="progress-bar-track" style="margin-bottom: 15px;">
-              <div class="progress-bar-fill" id="waterProgress" style="width: 0%; background: var(--blue-500); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></div>
+              <div class="progress-bar-fill" id="waterProgress"
+                style="width: 0%; background: var(--blue-500); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);"></div>
             </div>
             <div style="display:flex; gap:10px;">
               <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="updateWater(-1)">-</button>
-              <button class="btn btn-outline btn-sm" style="flex:2; border-color: var(--blue-500); color: var(--blue-500);" onclick="updateWater(1)">+ Add Glass</button>
+              <button class="btn btn-outline btn-sm"
+                style="flex:2; border-color: var(--blue-500); color: var(--blue-500);" onclick="updateWater(1)">+ Add
+                Glass</button>
             </div>
           </div>
 
@@ -136,10 +141,14 @@
           <div class="card">
             <div class="card-title" style="margin-bottom:1rem;">⚡ Quick Actions</div>
             <div style="display:flex; flex-direction:column; gap:8px;">
-              <a href="goal.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">📅 Set Today's Goal</a>
-              <a href="ai.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">🧠 Get AI Fitness Plan</a>
-              <a href="chat.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">💬 Join Community Chat</a>
-              <a href="profile.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">👤 Update My Profile</a>
+              <a href="goal.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">📅 Set Today's
+                Goal</a>
+              <a href="ai.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">🧠 Get AI
+                Fitness Plan</a>
+              <a href="chat.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">💬 Join
+                Community Chat</a>
+              <a href="profile.html" class="btn btn-secondary" style="justify-content:flex-start; gap:10px;">👤 Update
+                My Profile</a>
             </div>
           </div>
         </div>
@@ -223,4 +232,5 @@
   <script src="js/main.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
+
 </html>

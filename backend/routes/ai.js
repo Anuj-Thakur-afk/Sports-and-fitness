@@ -1,6 +1,6 @@
 // /backend/routes/ai.js
 import express from 'express';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import Suggestion from '../models/Suggestion.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -40,43 +40,34 @@ router.post('/suggest', async (req, res) => {
     let workoutPlan = '';
     let dietSuggestion = '';
 
-    // Try OpenAI if key is set
-    if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here') {
+    // Initialize Gemini AI
+    const apiKey = process.env.GEMINI_API_KEY;
+    
+    if (apiKey && apiKey !== 'your_key') {
       try {
-        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const prompt = `You are a professional fitness trainer. Based on the following details, provide a personalized weekly workout plan and diet suggestion.
-        
-User Details:
-- Fitness Goal: ${goal}
-- Age: ${ageNum} years
-- Activity Level: ${activityLevel}
+        const prompt = `Short fitness advice for: Goal: ${goal}, Age: ${ageNum}, Activity: ${activityLevel}. 
+        Provide a concise 7-day workout plan and diet suggestion. 
+        Format: Workout: [plan] Diet: [suggestion]`;
 
-Please provide:
-1. A 7-day workout plan (detailed, day by day)
-2. A diet suggestion with meal ideas for breakfast, lunch, dinner, and snacks
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text();
 
-Keep it practical, motivating, and safe.`;
+        // Simple parsing based on the prompt's suggested format
+        const parts = responseText.split(/Diet:/i);
+        workoutPlan = parts[0] ? parts[0].replace(/Workout:\s*/i, '').trim() : 'Plan generated below.';
+        dietSuggestion = parts[1] ? parts[1].trim() : responseText;
 
-        const completion = await openai.chat.completions.create({
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: prompt }],
-          max_tokens: 800,
-        });
-
-        const responseText = completion.choices[0].message.content;
-        // Split response into workout and diet parts
-        const parts = responseText.split(/diet suggestion|2\./i);
-        workoutPlan = parts[0] ? parts[0].replace(/1\.\s*/i, '').trim() : responseText;
-        dietSuggestion = parts[1] ? parts[1].trim() : 'See full response above.';
-      } catch (openaiError) {
-        console.error('OpenAI Error:', openaiError.message);
-        // Fall back to mock response on OpenAI error
+      } catch (error) {
+        console.error('Gemini API Error:', error.message);
+        // Fallback to mock on API error
         workoutPlan = generateMockWorkoutPlan(goal, ageNum, activityLevel);
         dietSuggestion = generateMockDiet(goal);
       }
     } else {
-      // Fallback mock response when OpenAI key not set
+      // Fallback mock response when Gemini key not set
       workoutPlan = generateMockWorkoutPlan(goal, ageNum, activityLevel);
       dietSuggestion = generateMockDiet(goal);
     }
@@ -93,8 +84,8 @@ Keep it practical, motivating, and safe.`;
 
     res.json({ success: true, suggestion });
   } catch (error) {
-    console.error('AI Error:', error.message);
-    res.status(500).json({ success: false, message: 'AI service error: ' + error.message });
+    console.error('AI Route Error:', error.message);
+    res.status(500).json({ success: false, message: 'Server error: ' + error.message });
   }
 });
 
@@ -112,7 +103,7 @@ router.get('/history', async (req, res) => {
   }
 });
 
-// --- Mock generators (used when OpenAI key is not set) ---
+// --- Mock generators (used when Gemini key is not set or fails) ---
 
 function generateMockWorkoutPlan(goal, age, activityLevel) {
   const intensity = activityLevel === 'sedentary' ? 'Low' : activityLevel === 'active' ? 'High' : 'Moderate';

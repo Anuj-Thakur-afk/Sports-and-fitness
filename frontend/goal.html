@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +13,7 @@
       gap: 12px;
       margin-bottom: 1.5rem;
     }
+
     .goal-date-nav input[type="date"] {
       padding: 8px 14px;
       border: 1.5px solid var(--gray-200);
@@ -22,11 +24,16 @@
       cursor: pointer;
       transition: var(--transition);
     }
-    .goal-date-nav input[type="date"]:focus { border-color: var(--green-400); }
+
+    .goal-date-nav input[type="date"]:focus {
+      border-color: var(--green-400);
+    }
+
     .big-progress {
       text-align: center;
       padding: 2rem 0;
     }
+
     .big-progress .progress-number {
       font-size: 3rem;
       font-weight: 800;
@@ -34,13 +41,25 @@
       color: var(--green-600);
       line-height: 1;
     }
-    .big-progress .progress-subtitle { color: var(--gray-500); font-size: 0.875rem; margin-top: 4px; }
-    .progress-bar-large { height: 18px; border-radius: 18px; }
+
+    .big-progress .progress-subtitle {
+      color: var(--gray-500);
+      font-size: 0.875rem;
+      margin-top: 4px;
+    }
+
+    .progress-bar-large {
+      height: 18px;
+      border-radius: 18px;
+    }
   </style>
 </head>
+
 <body>
   <nav class="navbar">
-    <div class="navbar-brand"><div class="logo-icon">💪</div>FitLife</div>
+    <div class="navbar-brand">
+      <div class="logo-icon">💪</div>FitLife
+    </div>
     <ul class="navbar-nav">
       <li><a href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a></li>
       <li><a href="profile.html"><span class="nav-icon">👤</span> Profile</a></li>
@@ -122,7 +141,8 @@
           <form id="goalForm" novalidate>
             <div class="form-group">
               <label class="form-label">Daily Calorie Goal (kcal) *</label>
-              <input type="number" id="calorieGoal" class="form-control" placeholder="e.g. 2000" min="100" max="10000" required />
+              <input type="number" id="calorieGoal" class="form-control" placeholder="e.g. 2000" min="100" max="10000"
+                required />
             </div>
             <div class="form-group">
               <label class="form-label">Current Progress (kcal burned)</label>
@@ -153,4 +173,5 @@
   <script src="js/main.js"></script>
   <script src="js/goal.js"></script>
 </body>
+
 </html>
