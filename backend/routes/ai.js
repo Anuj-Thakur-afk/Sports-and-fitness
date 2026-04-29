@@ -91,8 +91,8 @@ Keep it practical, motivating, and safe.`;
 
     res.json({ success: true, suggestion });
   } catch (error) {
-    console.error('AI Error:', error.message);
-    res.status(500).json({ success: false, message: 'AI service error: ' + error.message });
+    console.error('AI Route Error:', error.message);
+    res.status(500).json({ success: false, message: 'Server error: ' + error.message });
   }
 });
 
@@ -110,7 +110,7 @@ router.get('/history', async (req, res) => {
   }
 });
 
-// --- Mock generators (used when OpenAI key is not set) ---
+// --- Mock generators (used when Gemini key is not set or fails) ---
 
 function generateMockWorkoutPlan(goal, age, activityLevel) {
   const intensity = activityLevel === 'sedentary' ? 'Low' : activityLevel === 'active' ? 'High' : 'Moderate';

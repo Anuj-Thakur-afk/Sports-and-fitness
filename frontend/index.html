@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,7 @@
     body {
       background-image: radial-gradient(circle at 50% -20%, rgba(190, 242, 100, 0.1) 0%, var(--bg-dark) 50%);
     }
-    
+
     .hero {
       min-height: calc(100vh - 80px);
       display: flex;
@@ -57,13 +58,18 @@
     }
 
     /* Keep features hidden or styled appropriately for later, or remove if the focus is just the hero */
-    .features-section { display: none; } 
+    .features-section {
+      display: none;
+    }
 
     @media (max-width: 768px) {
-      .hero h1 { font-size: 3.5rem; }
+      .hero h1 {
+        font-size: 3.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar">
@@ -92,10 +98,12 @@
   </section>
 
   <!-- Footer -->
-  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); font-size: 0.9rem;">
+  <footer
+    style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); font-size: 0.9rem;">
     &copy; 2026 <span class="text-neon">FitLife</span> • Built with Node.js, Express, MongoDB
   </footer>
 
   <script src="js/main.js"></script>
 </body>
+
 </html>
