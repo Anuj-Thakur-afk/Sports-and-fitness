@@ -1,6 +1,6 @@
 // /backend/routes/ai.js
 import express from 'express';
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import Suggestion from '../models/Suggestion.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -40,10 +40,11 @@ router.post('/suggest', async (req, res) => {
     let workoutPlan = '';
     let dietSuggestion = '';
 
-    // Try OpenAI if key is set
-    if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here') {
+    // Try Google Gemini if key is set
+    if (process.env.GOOGLE_API_KEY && process.env.GOOGLE_API_KEY !== 'your_google_api_key_here') {
       try {
-        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
         const prompt = `You are a professional fitness trainer. Based on the following details, provide a personalized weekly workout plan and diet suggestion.
         
@@ -58,25 +59,22 @@ Please provide:
 
 Keep it practical, motivating, and safe.`;
 
-        const completion = await openai.chat.completions.create({
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: prompt }],
-          max_tokens: 800,
-        });
-
-        const responseText = completion.choices[0].message.content;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const responseText = response.text();
+        
         // Split response into workout and diet parts
         const parts = responseText.split(/diet suggestion|2\./i);
         workoutPlan = parts[0] ? parts[0].replace(/1\.\s*/i, '').trim() : responseText;
         dietSuggestion = parts[1] ? parts[1].trim() : 'See full response above.';
-      } catch (openaiError) {
-        console.error('OpenAI Error:', openaiError.message);
-        // Fall back to mock response on OpenAI error
+      } catch (geminiError) {
+        console.error('Gemini Error:', geminiError.message);
+        // Fall back to mock response on Gemini error
         workoutPlan = generateMockWorkoutPlan(goal, ageNum, activityLevel);
         dietSuggestion = generateMockDiet(goal);
       }
     } else {
-      // Fallback mock response when OpenAI key not set
+      // Fallback mock response when Gemini key not set
       workoutPlan = generateMockWorkoutPlan(goal, ageNum, activityLevel);
       dietSuggestion = generateMockDiet(goal);
     }

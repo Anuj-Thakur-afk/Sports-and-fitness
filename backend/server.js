@@ -26,12 +26,10 @@ const io = new Server(httpServer, {
 app.use(cors());
 app.use(express.json());
 
-// 1. Basic test route
-app.get('/', (req, res) => {
-  res.status(200).send('🚀 FitLife API is live and running perfectly on Render.');
-});
+// Static file serving (MUST be before routes)
+app.use(express.static(path.join(__dirname, '../frontend')));
 
-// 2. Import API Routes
+// 1. Import API Routes
 import authRoutes from './routes/auth.js';
 import workoutRoutes from './routes/workout.js';
 import profileRoutes from './routes/profile.js';
@@ -45,8 +43,10 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/ai', aiRoutes);
 
-// Static file serving
-app.use(express.static(path.join(__dirname, '../frontend')));
+// 2. Basic test route
+app.get('/api/health', (req, res) => {
+  res.status(200).send('🚀 FitLife API is live and running perfectly on Render.');
+});
 
 // 3. Socket.IO Chat Logic
 const chatHistory = [];
